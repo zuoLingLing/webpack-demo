@@ -18,5 +18,7 @@ console.log(APP.next());
 console.log(APP.next());
 
 let text = 'acvsdfsdfs';
-console.log(text.includes('ca'));
+console.log(text.includes('v'));
+
+$('ul li:eq(0)').css('background','red')
 

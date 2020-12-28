@@ -2,20 +2,13 @@ var path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require("copy-webpack-plugin");
+const webpack = require('webpack');
 module.exports = {
     entry: ["@babel/polyfill","./src/main.js"], //@babel/polyfill是解决内核版本太低不支持es6新语法，如数组的includes等方法的
     output: {
         filename: 'bundle.js',
-        path: path.join(__dirname, './dist/')
-    },
-    mode: 'development', //production
-    devServer: {
-        open: true,
-        hot: true,
-        port: 8000,
-        compress: true,
-        contentBase:'./dist'
-
+        path: path.join(__dirname, './dist/'),
+        publicPath:'/'
     },
     plugins: [
         new HtmlWebpackPlugin(
@@ -25,14 +18,18 @@ module.exports = {
             }
         ),
         new CleanWebpackPlugin(),
-        new CopyPlugin({
-            patterns: [
+        new CopyPlugin(
+            [
                 {
                     from: "./src/index.html",
                     to: path.join(__dirname, './dist/')
                 }
-            ],
-        }),
+            ]
+        ),
+        new webpack.ProvidePlugin({ //第三方库的引入，在每个文件注入key值所对应的变量，如$
+            $:'jquery',
+            jQuery:'jquery'
+        })
 
     ],
     module: {
@@ -43,7 +40,7 @@ module.exports = {
             },
             {
                 test: /\.less$/,
-                loader: "less-loader", // compiles Less to CSS
+                use: "less-loader", // compiles Less to CSS
             },
             {
                 test: /\.(png|jpg|jpeg|gif)$/i,
@@ -69,5 +66,5 @@ module.exports = {
                 exclude: /node_modules/
             }
         ],
-    },
+    }
 }
