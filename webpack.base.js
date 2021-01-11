@@ -3,6 +3,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require("copy-webpack-plugin");
 const webpack = require('webpack');
+const processENV = require("./processENV")
 module.exports = {
     entry: ["@babel/polyfill", "./src/index.jsx"], //@babel/polyfill是解决内核版本太低不支持es6新语法，如数组的includes等方法的
     output: {
@@ -31,7 +32,7 @@ module.exports = {
             jQuery: 'jquery'
         }),
         new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+            'processENV': JSON.stringify(processENV)
         })
 
     ],

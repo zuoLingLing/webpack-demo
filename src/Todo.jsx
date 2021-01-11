@@ -7,12 +7,38 @@ class Todo extends Component {
             name:'小明',
             age:18
         }
+        this.state={
+            dataAll:[]
+        }
+    }
+    btnC = ()=>{
+        console.log(11);
+        fetch('/api/user/getAll').then(res=>res.json(),err=>{
+            console.log(err)
+        }).then(data=>{
+            this.setState({
+                dataAll:data
+            })
+        },err1=>{
+            console.log(err1)
+        })
     }
     render(){
-        console.log(process,111);
+        const {dataAll} = this.state;
         return(
             <>
-                <div>我的名字叫{this.person.name},今年{this.person.age}岁</div>
+                <div onClick={this.btnC} style={{cursor:'pointer'}}>我的名字叫{this.person.name},今年{this.person.age}岁</div>
+                <ul>
+                    {
+                        dataAll.map(el=>{
+                            return (
+                                <li key={el.id}>
+                                    我叫{el.username}
+                                </li>
+                            )
+                        })
+                    }
+                </ul>
             </>
         )
     }
