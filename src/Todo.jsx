@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import a from './api/http'
 class Todo extends Component {
     constructor(props){
         super(props)
@@ -25,6 +25,7 @@ class Todo extends Component {
     }
     render(){
         const {dataAll} = this.state;
+        console.log(a);
         return(
             <>
                 <div onClick={this.btnC} style={{cursor:'pointer'}}>我的名字叫{this.person.name},今年{this.person.age}岁</div>
